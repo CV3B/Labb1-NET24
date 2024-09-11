@@ -38,11 +38,12 @@ Programmet ska också addera ihop alla tal den hittat enligt ovan och skriva ut 
 sist i programmet. Gör gärna en tom rad emellan för att skilja från output ovan.
 Exempel output för input ”29535123p48723487597645723645”:
 Total = 5836428677242
-
+ 
 */
 
 //string input = Console.ReadLine();
 using System.Diagnostics.Metrics;
+using System.Numerics;
 
 string input = "29535123p48723487597645723645";
 //string firstNumber = "";29535123p48723487597645723645
@@ -50,7 +51,7 @@ string text = "";
 string test = "2348759764";
 string subTest = "";
 char firstNumber = ' ';
-
+long sumOfInput = 0;
 bool isInBlueZone123 = false;
 
 int[] startEndIndexOf = new int[2];
@@ -67,6 +68,7 @@ for (int i = 0; i < input.Length; i++)
         {
             startEndIndexOf[0] = input.IndexOf(text);
             startEndIndexOf[1] = startEndIndexOf[0] + text.Length - 1;
+            sumOfInput += long.Parse(text.ToString());
 
             for (int k = 0; k < input.Length; k++)
             {
@@ -95,7 +97,12 @@ for (int i = 0; i < input.Length; i++)
 
     text = "";
     //Console.WriteLine();
+    Console.ResetColor();
+
+    //Console.WriteLine(input[i]);
 
 }
+
+Console.WriteLine($"\n{sumOfInput}");
 
 
