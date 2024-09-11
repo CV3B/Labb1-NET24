@@ -1,78 +1,35 @@
-﻿/*Labb1 – Hitta tal i sträng med tecken
-Skapa en konsollapplikation som ber användaren mata in en text (string) i konsollen.
-Den inmatade strängen ska sedan sökas igenom efter alla delsträngar som är tal som börjar
-och slutar på samma siffra, utan att start/slutsiffran, eller något annat tecken än
-siffror förekommer där emellan.
+﻿
+string input = Console.ReadLine();
+string currentInputSubString = "";
 
+char firstCharInSubString = ' ';
 
-ex. 3463 är ett korrekt sådant tal, men 34363 är det inte eftersom det finns
-ytterligare en 3:a i talet, förutom start och slutsiffran. Strängar med bokstäver i
-t.ex 95a9 är inte heller ett korrekt tal.
+long sumOfMarkedNum = 0;
 
-Skriv ut och markera varje korrekt delsträng
-För varje sådan delsträng som matchar kriteriet ovan ska programmet skriva ut en
-rad med hela strängen, men där delsträngen är markerad i en annan färg.
-Exempel output för input ”29535123p48723487597645723645”:
+int startIndexOfMarkedNum = 0;
+int endIndexOfMarkedNum = 0;
 
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-29535123p48723487597645723645
-
-Ni kan välja vilka färger ni skriver ut med så länge man ser skillnad på dem. Ni
-byter färg genom att ändra värde på Console.ForegroundColor.
-
-Addera ihop alla tal och skriv ut totalen
-Programmet ska också addera ihop alla tal den hittat enligt ovan och skriva ut det
-sist i programmet. Gör gärna en tom rad emellan för att skilja från output ovan.
-Exempel output för input ”29535123p48723487597645723645”:
-Total = 5836428677242
- 
-*/
-
-//string input = Console.ReadLine();
-using System.Diagnostics.Metrics;
-using System.Numerics;
-
-string input = "29535123p48723487597645723645";
-//string firstNumber = "";29535123p48723487597645723645
-string text = "";
-string test = "2348759764";
-string subTest = "";
-char firstNumber = ' ';
-long sumOfInput = 0;
-bool isInBlueZone123 = false;
-
-int[] startEndIndexOf = new int[2];
+Console.WriteLine();
 
 for (int i = 0; i < input.Length; i++)
 {
 
     for (int j = i; j < input.Length; j++)
     {
-        text += input[j];
-        firstNumber = text[0];
+        currentInputSubString += input[j];
+        firstCharInSubString = currentInputSubString[0];
 
-        if (firstNumber == input[j] && long.TryParse(text, out long a) && text.Count(n => n == firstNumber) == 2)
+
+        if (firstCharInSubString == input[j] && long.TryParse(currentInputSubString, out long _) && currentInputSubString.Count(n => n == firstCharInSubString) == 2)
         {
-            startEndIndexOf[0] = input.IndexOf(text);
-            startEndIndexOf[1] = startEndIndexOf[0] + text.Length - 1;
-            sumOfInput += long.Parse(text.ToString());
+            startIndexOfMarkedNum = i;
+            endIndexOfMarkedNum = j;
+
+            sumOfMarkedNum += long.Parse(currentInputSubString);
 
             for (int k = 0; k < input.Length; k++)
             {
-                if (k >= startEndIndexOf[0] && k <= startEndIndexOf[1])
+                if (k >= startIndexOfMarkedNum && k <= endIndexOfMarkedNum)
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write(input[k]);
@@ -86,23 +43,12 @@ for (int i = 0; i < input.Length; i++)
             }
             Console.WriteLine();
 
-
         }
-
-
-
     }
 
-    subTest = "";
+    currentInputSubString = "";
 
-    text = "";
-    //Console.WriteLine();
     Console.ResetColor();
-
-    //Console.WriteLine(input[i]);
-
 }
 
-Console.WriteLine($"\n{sumOfInput}");
-
-
+Console.WriteLine($"\nTotal = {sumOfMarkedNum}");
